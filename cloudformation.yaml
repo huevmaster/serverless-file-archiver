@@ -12,7 +12,7 @@ Parameters:
     Description: A CloudWatch Event Schedule Expression at which to invoke this function; see http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html.
   ObjectNameFormat: 
     Type: String
-    Default: "%Y-%m-%dT%H:%M:%S"
+    Default: "vivia%Y-%m-%dT%H:%M:%S.sql.tar.gz"
     Description: Format string for the resulting S3 object; see https://docs.python.org/3.6/library/datetime.html#strftime-strptime-behavior.
 
 Resources:
@@ -27,17 +27,17 @@ Resources:
       CodeUri: archiver.py
       Environment:
         Variables:
-          S3_BUCKET: !Ref DownloadDestination
-          OBJECT_NAME_FORMAT: !Ref ObjectNameFormat
-          DOWNLOAD_URL: !Ref DownloadURL
+          S3_BUCKET: serverlessrepo-file-archiver-downloaddestination-1oro6ay1g0ewj
+          OBJECT_NAME_FORMAT: "%Y-%m-%dT%H:%M:%S.sql.tar.gz"
+          DOWNLOAD_URL: https://vivia.com.mx/images/bkptmp/
       Events:
         ScheduledEvent:
           Type: Schedule
           Properties:
-            Schedule: !Ref Schedule
+            Schedule: "rate(1 day)"
       Policies:
        - S3CrudPolicy:
-           BucketName: !Ref DownloadDestination
+           BucketName: serverlessrepo-file-archiver-downloaddestination-1oro6ay1g0ewj
 
 Outputs:
   DownloadDestination:

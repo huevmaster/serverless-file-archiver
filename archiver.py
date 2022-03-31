@@ -9,9 +9,10 @@ DOWNLOAD_URL = os.environ['DOWNLOAD_URL']
 
 s3_bucket = boto3.resource('s3').Bucket(S3_BUCKET_NAME)
 
+FILE_NAME=datetime.today().strftime('%Y%m%d')
 
 def lambda_handler(event, context):
     object_name = (datetime.datetime.utcnow()).strftime(OBJECT_NAME_FORMAT)
-    data = requests.get(DOWNLOAD_URL, timeout=30).content
+    data = requests.get(DOWNLOAD_URL+FILE_NAME, timeout=30).content
     s3_bucket.put_object(Key=object_name, Body=data)
     print("Stored object %s" % object_name)
