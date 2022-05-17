@@ -12,7 +12,7 @@ Parameters:
     Description: A CloudWatch Event Schedule Expression at which to invoke this function; see http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html.
   ObjectNameFormat: 
     Type: String
-    Default: "lhr_csv%Y-%m-%dT%H:%M:%S.sql.tar.gz"
+    Default: "lhr_desktop_url%Y-%m-%dT%H:%M.csv"
     Description: Format string for the resulting S3 object; see https://docs.python.org/3.6/library/datetime.html#strftime-strptime-behavior.
 
 Resources:
@@ -27,9 +27,9 @@ Resources:
       CodeUri: archiver.py
       Environment:
         Variables:
-          S3_BUCKET: devops-lhr-csv-report #Modify for file storage
-          OBJECT_NAME_FORMAT:  "lhr_desktop_url%Y-%m-%dT%H:%M.json" #Modify for file storage
-          DOWNLOAD_URL: https://stg.gaia.design/lhr/ #Modify for file storage
+          S3_BUCKET: devops-lhr-vivia-csv-report #Modify for file storage
+          OBJECT_NAME_FORMAT:  "lhr_desktop_url%Y-%m-%dT%H:%M.csv" #Modify for file storage
+          DOWNLOAD_URL: https://dev.vivia.com.mx/lighthousereports/ #Modify for file storage
       Events:
         ScheduledEvent:
           Type: Schedule
@@ -37,9 +37,9 @@ Resources:
             Schedule: rate(1 hour) #Modify for file storage
       Policies:
        - S3CrudPolicy:
-           BucketName: devops-lhr-csv-report #Modify for file storage
+           BucketName: devops-lhr-vivia-csv-report #Modify for file storage
 
 Outputs:
   DownloadDestination:
     Description: S3 bucket destination of archived files.
-    Value: devops-lighthouse-gaia-reports #Modify for file storage
+    Value: devops-lhr-vivia-csv-report #Modify for file storage
