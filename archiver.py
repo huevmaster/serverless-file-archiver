@@ -38,7 +38,7 @@ def lambda_handler(event, context):
         suma2 ="lhr_mobile_url"+str(j)+".json"
         data = requests.get(DOWNLOAD_URL+suma2, timeout=30).content
         folder_name2="mobile"
-        file_csv2="lhr_desktop_url"+str(i)+FILE_NAME+".csv"
+        file_csv2="lhr_desktop_url"+str(j)+FILE_NAME+".csv"
         s3_bucket.put_object(Key=folder_name2+'/'+file_csv2, Body=data)
         print("Stored object %s" % file_csv2)
         j = j+1    # update counter
